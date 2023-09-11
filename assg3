@@ -1,0 +1,527 @@
+CEC@user:~$ sudo mysql -u root
+[sudo] password for CEC: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use test
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables
+    -> ;
++----------------+
+| Tables_in_test |
++----------------+
+| borrow         |
+| branch         |
+| customer       |
+| deposit        |
++----------------+
+4 rows in set (0.00 sec)
+
+mysql> select sum(Amount) from borrow;
++-------------+
+| sum(Amount) |
++-------------+
+|      141000 |
++-------------+
+1 row in set (0.40 sec)
+
+mysql> select max(Amount) from borrow;
++-------------+
+| max(Amount) |
++-------------+
+|      100000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(Amount) from deposit;
++-------------+
+| sum(Amount) |
++-------------+
+|      155100 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select max(Amount) from deposit in (select Cust_id from customer where city="ernakulam");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in (select Cust_id from customer where city="ernakulam")' at line 1
+mysql> select * from customer;
++---------+------------+------------+
+| Cust_id | C_name     | City       |
++---------+------------+------------+
+| 101     | ajeesh     | tvm        |
+| 102     | prijesh    | kottayam   |
+| 103     | suresh     | kollam     |
+| 104     | fazil      | vadakara   |
+| 105     | shamil     | border     |
+| 106     | bijukuttan | kottiyam   |
+| 107     | sooraj     | jammu      |
+| 108     | pakki      | etthikara  |
+| 109     | kochunni   | kayamkulam |
+| 110     | firoz      | ullampara  |
+| 111     | fera       | attingal   |
++---------+------------+------------+
+11 rows in set (0.03 sec)
+
+mysql> select max(Amount) from deposit in (select Cust_id from customer where City="ernakulam");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in (select Cust_id from customer where City="ernakulam")' at line 1
+mysql> select max(Amount) from deposit where Cust in (select Cust_id from customer where City="ernaku
+lam");
+ERROR 1054 (42S22): Unknown column 'Cust' in 'IN/ALL/ANY subquery'
+mysql> select max(Amount) from deposit where Cust_id in (select Cust_id from customer where City="ernakulam");
++-------------+
+| max(Amount) |
++-------------+
+|        NULL |
++-------------+
+1 row in set (0.05 sec)
+
+mysql> select count(City) from branch;
++-------------+
+| count(City) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select Amount,Open_date from deposit group by Branch_id;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'test.deposit.Amount' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select * from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1010   | 101     |  12100 | 1001      | 2000-01-15 |
+| 1011   | 102     |  27500 | 1002      | 2001-02-11 |
+| 1012   | 103     |   5500 | 1003      | 2001-02-10 |
+| 1014   | 105     | 110000 | 1005      | 2002-08-10 |
++--------+---------+--------+-----------+------------+
+4 rows in set (0.04 sec)
+
+mysql> select Amount,Branch_id from deposit group by Branch_id;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'test.deposit.Amount' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select sum(Amount),Branch_id from deposit group by Branch_id;
++-------------+-----------+
+| sum(Amount) | Branch_id |
++-------------+-----------+
+|       12100 | 1001      |
+|       27500 | 1002      |
+|        5500 | 1003      |
+|      110000 | 1005      |
++-------------+-----------+
+4 rows in set (0.03 sec)
+
+mysql> insert deposit values(1015,111,100000,1005,20030810);
+Query OK, 1 row affected (0.38 sec)
+
+mysql> select * from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1010   | 101     |  12100 | 1001      | 2000-01-15 |
+| 1011   | 102     |  27500 | 1002      | 2001-02-11 |
+| 1012   | 103     |   5500 | 1003      | 2001-02-10 |
+| 1014   | 105     | 110000 | 1005      | 2002-08-10 |
+| 1015   | 111     | 100000 | 1005      | 2003-08-10 |
++--------+---------+--------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(Amount),Branch_id from deposit group by Branch_id;
++-------------+-----------+
+| sum(Amount) | Branch_id |
++-------------+-----------+
+|       12100 | 1001      |
+|       27500 | 1002      |
+|        5500 | 1003      |
+|      210000 | 1005      |
++-------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from branch;
++-----------+----------+----------+
+| Branch_id | bname    | City     |
++-----------+----------+----------+
+| 1001      | attingal | attingal |
+| 1002      | kollam   | kollam   |
+| 1003      | kottayam | kottayam |
+| 1004      | allapy   | allapy   |
+| 1005      | tvm      | tvm      |
++-----------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select bname from branch where Branch_id in (select Branch_id from deposit where max(Amount)>4000);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select bname from branch where Branch_id in (select Branch_id from deposit where max(Amount)>4000 group by Branch_id);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select bname from branch where Branch_id in (select Branch_id from deposit where sum(Amount)>4000 
+ERROR 1111 (HY000): Invalid use of group function
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> select sum(Amount),Branch_id from deposit group by Branch_id having sum(Amount)>10000;
++-------------+-----------+
+| sum(Amount) | Branch_id |
++-------------+-----------+
+|       12100 | 1001      |
+|       27500 | 1002      |
+|      210000 | 1005      |
++-------------+-----------+
+3 rows in set (0.02 sec)
+
+mysql> select bname from branch where Branch_id in(select Branch_id from deposit where sum(Amount)>4000);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select bname from branch where Branch_id in(select Branch_id from deposit where sum(Amount)>4000);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select bname from branch where Branch_id in(select Branch_id from deposit group by Branch_id having sum(Amount)>10000);
++----------+
+| bname    |
++----------+
+| attingal |
+| kollam   |
+| tvm      |
++----------+
+3 rows in set (0.13 sec)
+
+mysql> select C_name  from customer where Cust_id in(select Cust_id  from deposit group by Cust_id having min(Amount));
++---------+
+| C_name  |
++---------+
+| ajeesh  |
+| prijesh |
+| suresh  |
+| shamil  |
+| fera    |
++---------+
+5 rows in set (0.01 sec)
+
+mysql> select * from customers;
+ERROR 1146 (42S02): Table 'test.customers' doesn't exist
+mysql> select * from customer;
++---------+------------+------------+
+| Cust_id | C_name     | City       |
++---------+------------+------------+
+| 101     | ajeesh     | tvm        |
+| 102     | prijesh    | kottayam   |
+| 103     | suresh     | kollam     |
+| 104     | fazil      | vadakara   |
+| 105     | shamil     | border     |
+| 106     | bijukuttan | kottiyam   |
+| 107     | sooraj     | jammu      |
+| 108     | pakki      | etthikara  |
+| 109     | kochunni   | kayamkulam |
+| 110     | firoz      | ullampara  |
+| 111     | fera       | attingal   |
++---------+------------+------------+
+11 rows in set (0.01 sec)
+
+mysql> select * from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1010   | 101     |  12100 | 1001      | 2000-01-15 |
+| 1011   | 102     |  27500 | 1002      | 2001-02-11 |
+| 1012   | 103     |   5500 | 1003      | 2001-02-10 |
+| 1014   | 105     | 110000 | 1005      | 2002-08-10 |
+| 1015   | 111     | 100000 | 1005      | 2003-08-10 |
++--------+---------+--------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select Cust_id from deposit where Amount=min(Amount);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select min(Amount) from deposit;
++-------------+
+| min(Amount) |
++-------------+
+|        5500 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select Cust_id from deposit where Amount=(select min(Amount) from deposit);
++---------+
+| Cust_id |
++---------+
+| 103     |
++---------+
+1 row in set (0.06 sec)
+
+mysql> select C_name from customer where Cust_id=(select Cust_id from deposit where Amount=(select min(Amount) from deposit));
++--------+
+| C_name |
++--------+
+| suresh |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select count(City) from customer where City="attingal";
++-------------+
+| count(City) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(City)  from customer where Cust_id in(select Cust_id  from deposit group by Cust_
+id having City="attingal");
++-------------+
+| count(City) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select count(City)  from customer where Cust_id in(select Cust_id  from deposit group by Cust_id having City="ulampara");
++-------------+
+| count(City) |
++-------------+
+|           0 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from branch;
++-----------+----------+----------+
+| Branch_id | bname    | City     |
++-----------+----------+----------+
+| 1001      | attingal | attingal |
+| 1002      | kollam   | kollam   |
+| 1003      | kottayam | kottayam |
+| 1004      | allapy   | allapy   |
+| 1005      | tvm      | tvm      |
++-----------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select max(Amount) from deposit where Branch_id in(select Branch_id from branch group by Branch_id having City="allapy");
+ERROR 1054 (42S22): Unknown column 'City' in 'having clause'
+mysql> select max(Amount) from deposit where Branch_id in(select Branch_id from where City="allapy");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where City="allapy")' at line 1
+mysql> 
+mysql> 
+mysql> select max(Amount) from deposit where Branch_id in(select Branch_id from branch where City="alla
++-------------+
+| max(Amount) |
++-------------+
+|        NULL |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1010   | 101     |  12100 | 1001      | 2000-01-15 |
+| 1011   | 102     |  27500 | 1002      | 2001-02-11 |
+| 1012   | 103     |   5500 | 1003      | 2001-02-10 |
+| 1014   | 105     | 110000 | 1005      | 2002-08-10 |
+| 1015   | 111     | 100000 | 1005      | 2003-08-10 |
++--------+---------+--------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select max(Amount) from deposit where Branch_id in(select Branch_id from branch where City="tvm");
++-------------+
+| max(Amount) |
++-------------+
+|      110000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(C_name) from customer where City="attingal";
++---------------+
+| count(C_name) |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(C_name) from customer where City="kollam";
++---------------+
+| count(C_name) |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select C_name from customer where City not in("ernakulam","alapuzha");
++------------+
+| C_name     |
++------------+
+| ajeesh     |
+| prijesh    |
+| suresh     |
+| fazil      |
+| shamil     |
+| bijukuttan |
+| sooraj     |
+| pakki      |
+| kochunni   |
+| firoz      |
+| fera       |
++------------+
+11 rows in set (0.01 sec)
+
+mysql> select * from customer;
++---------+------------+------------+
+| Cust_id | C_name     | City       |
++---------+------------+------------+
+| 101     | ajeesh     | tvm        |
+| 102     | prijesh    | kottayam   |
+| 103     | suresh     | kollam     |
+| 104     | fazil      | vadakara   |
+| 105     | shamil     | border     |
+| 106     | bijukuttan | kottiyam   |
+| 107     | sooraj     | jammu      |
+| 108     | pakki      | etthikara  |
+| 109     | kochunni   | kayamkulam |
+| 110     | firoz      | ullampara  |
+| 111     | fera       | attingal   |
++---------+------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select C_name from customer where City not in("tvm","alapuzha");
++------------+
+| C_name     |
++------------+
+| prijesh    |
+| suresh     |
+| fazil      |
+| shamil     |
+| bijukuttan |
+| sooraj     |
+| pakki      |
+| kochunni   |
+| firoz      |
+| fera       |
++------------+
+10 rows in set (0.00 sec)
+
+mysql> select C_name from customer where City not in("tvm","alapuzha","jammu");
++------------+
+| C_name     |
++------------+
+| prijesh    |
+| suresh     |
+| fazil      |
+| shamil     |
+| bijukuttan |
+| pakki      |
+| kochunni   |
+| firoz      |
+| fera       |
++------------+
+9 rows in set (0.00 sec)
+
+mysql> select C_name,Cust_id from customer order by C_name;
++------------+---------+
+| C_name     | Cust_id |
++------------+---------+
+| ajeesh     | 101     |
+| bijukuttan | 106     |
+| fazil      | 104     |
+| fera       | 111     |
+| firoz      | 110     |
+| kochunni   | 109     |
+| pakki      | 108     |
+| prijesh    | 102     |
+| shamil     | 105     |
+| sooraj     | 107     |
+| suresh     | 103     |
++------------+---------+
+11 rows in set (0.00 sec)
+
+mysql> select C_name,Cust_id from customer order by C_name dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select C_name,Cust_id from customer order by C_name desc;
++------------+---------+
+| C_name     | Cust_id |
++------------+---------+
+| suresh     | 103     |
+| sooraj     | 107     |
+| shamil     | 105     |
+| prijesh    | 102     |
+| pakki      | 108     |
+| kochunni   | 109     |
+| firoz      | 110     |
+| fera       | 111     |
+| fazil      | 104     |
+| bijukuttan | 106     |
+| ajeesh     | 101     |
++------------+---------+
+11 rows in set (0.01 sec)
+
+mysql> select count(Cust_id) from deposit;
++----------------+
+| count(Cust_id) |
++----------------+
+|              5 |
++----------------+
+1 row in set (0.06 sec)
+
+mysql> select count(Cust_id) from deposit group by Cust_id;
++----------------+
+| count(Cust_id) |
++----------------+
+|              1 |
+|              1 |
+|              1 |
+|              1 |
+|              1 |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> select count(Cust_id),Branch_id from deposit group by Cust_id;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'test.deposit.Branch_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> select count(Cust_id) from deposit group by Branch_id;
++----------------+
+| count(Cust_id) |
++----------------+
+|              1 |
+|              1 |
+|              1 |
+|              2 |
++----------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(Open_date) from deposit where Open_date>20160101;
++------------------+
+| count(Open_date) |
++------------------+
+|                0 |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> select Cust_id  from customer where Cust_id  not in(select Cust_id from borrow);
++---------+
+| Cust_id |
++---------+
+| 106     |
+| 107     |
+| 108     |
+| 109     |
+| 110     |
+| 111     |
++---------+
+6 rows in set (0.00 sec)
+
+mysql>
+

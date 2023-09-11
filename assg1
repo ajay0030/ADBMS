@@ -1,0 +1,647 @@
+cec@cec-ThinkCentre-M83:~$ sudo mysql -u root
+[sudo] password for cec: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database pavi;
+Query OK, 1 row affected (0.10 sec)
+mysql> use pavi;
+Database changed
+mysql> create table student(Roll_no int,Name varchar(20));
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_pavi |
++----------------+
+| student        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int         | YES  |     | NULL    |       |
+| Name    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into student values(1,'Pavi');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into student values(2,'Amal');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into student values(3,'Jasna');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student values(4,'Parvathy');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into student values(5,'Gopika');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int         | YES  |     | NULL    |       |
+| Name    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++---------+----------+
+| Roll_no | Name     |
++---------+----------+
+|       1 | Pavi     |
+|       2 | Amal     |
+|       3 | Jasna    |
+|       4 | Parvathy |
+|       5 | Gopika   |
++---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add primary key(Roll_no);
+Query OK, 0 rows affected (0.73 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update student set Name='Anjali' where Roll_no=2;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----------+
+| Roll_no | Name     |
++---------+----------+
+|       1 | Pavi     |
+|       2 | Anjali   |
+|       3 | Jasna    |
+|       4 | Parvathy |
+|       5 | Gopika   |
++---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add column Address varchar(20);
+Query OK, 0 rows affected (0.23 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int         | NO   | PRI | NULL    |       |
+| Name    | varchar(20) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from student;
++---------+----------+---------+
+| Roll_no | Name     | Address |
++---------+----------+---------+
+|       1 | Pavi     | NULL    |
+|       2 | Anjali   | NULL    |
+|       3 | Jasna    | NULL    |
+|       4 | Parvathy | NULL    |
+|       5 | Gopika   | NULL    |
++---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update student set Address='MCA' where Roll_no=1;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set Address='MCA' where Roll_no=2;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set Address='MCA' where Roll_no=3;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set Address='MCA' where Roll_no=4;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set Address='MCA' where Roll_no=5;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----------+---------+
+| Roll_no | Name     | Address |
++---------+----------+---------+
+|       1 | Pavi     | MCA     |
+|       2 | Anjali   | MCA     |
+|       3 | Jasna    | MCA     |
+|       4 | Parvathy | MCA     |
+|       5 | Gopika   | MCA     |
++---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> create database test;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_pavi |
++----------------+
+| student        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mca                |
+| mcas1              |
+| mysql              |
+| pavi               |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> drop database test;
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mca                |
+| mcas1              |
+| mysql              |
+| pavi               |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> use pavi;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql> create table customer (Cust_id varchar(10) Primary Key,C_name Varchar(15) Not NULL,City varchar(10));
+Query OK, 0 rows affected (0.32 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_pavi |
++----------------+
+| customer       |
+| student        |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> create table branch(Branch_id Varchar(5) Primary Key, bname Varchar (15),
+ City varchar(10));
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> create table deposit(Acc_no varchar(10) Primary Key,Cust_id Varchar(10) Not NULL, Amount int,Branch_id Varchar(5), Open_date date);
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> create table borrow(Loan_no Varchar(5) Primary Key, Cust_id Varchar (10), Branch_id varchar(5), Amount int);
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_pavi |
++----------------+
+| borrow         |
+| branch         |
+| customer       |
+| deposit        |
+| student        |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from borrow;
+Empty set (0.00 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Branch_id | varchar(5)  | NO   | PRI | NULL    |       |
+| bname     | varchar(15) | YES  |     | NULL    |       |
+| City      | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   |     | NULL    |       |
+| Amount    | int         | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> desc borrow;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Loan_no   | varchar(5)  | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Amount    | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table customer add column Address varchar(20);
+Query OK, 0 rows affected (0.24 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table deposit add foreign key (cust_id) references customer(cust_id);
+Query OK, 0 rows affected (0.81 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Branch_id | varchar(5)  | NO   | PRI | NULL    |       |
+| bname     | varchar(15) | YES  |     | NULL    |       |
+| City      | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   | MUL | NULL    |       |
+| Amount    | int         | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> desc borrow;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Loan_no   | varchar(5)  | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Amount    | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer rename column address to new_address;
+Query OK, 0 rows affected (0.27 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Cust_id     | varchar(10) | NO   | PRI | NULL    |       |
+| C_name      | varchar(15) | NO   |     | NULL    |       |
+| City        | varchar(10) | YES  |     | NULL    |       |
+| new_address | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer drop column new_address;
+Query OK, 0 rows affected (0.26 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> rename table branch to Branch1;
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc Branch1;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Branch_id | varchar(5)  | NO   | PRI | NULL    |       |
+| bname     | varchar(15) | YES  |     | NULL    |       |
+| City      | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create user user1 identified by '12345';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> grant all on customer to user1;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> ^DBye
+cec@cec-ThinkCentre-M83:~$ sudo mysql -u user1;
+[sudo] password for cec: 
+Sorry, try again.
+
+cec@cec-ThinkCentre-M83:~$ sudo mysql -u user1 -p;
+Enter password:12345
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| pavi               |
+| performance_schema |
++--------------------+
+3 rows in set (0.01 sec)
+
+mysql> use pavi;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_pavi |
++----------------+
+| customer       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer;
+Empty set (0.00 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ^DBye
+cec@cec-ThinkCentre-M83:~$ sudo mysql -u root;
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mca                |
+| mcas1              |
+| mysql              |
+| pavi               |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> use pavi;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql> revoke all on customer from user1;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> ^DBye
+cec@cec-ThinkCentre-M83:~$ sudo mysql -u user1 -p;
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> use pavi;
+ERROR 1044 (42000): Access denied for user 'user1'@'%' to database 'pavi'
+mysql> ^DBye
+cec@cec-ThinkCentre-M83:~$ sudo mysql -u root -v;
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Reading history-file /root/.mysql_history
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use pavi;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table test(Name varchar(10));
+--------------
+create table test(Name varchar(10))
+--------------
+
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> show tables;
+--------------
+show tables
+--------------
+
++----------------+
+| Tables_in_pavi |
++----------------+
+| Branch1        |
+| borrow         |
+| customer       |
+| deposit        |
+| student        |
+| test           |
++----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from test;
+--------------
+select * from test
+--------------
+
+Empty set (0.01 sec)
+
+mysql> insert into test values('manu');
+--------------
+insert into test values('manu')
+--------------
+
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into test values('anu');
+--------------
+insert into test values('anu')
+--------------
+
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from test;
+--------------
+select * from test
+--------------
+
++------+
+| Name |
++------+
+| manu |
+| anu  |
++------+
+2 rows in set (0.00 sec)
+
+mysql> truncate table test;
+--------------
+truncate table test
+--------------
+
+Query OK, 0 rows affected (0.57 sec)
+
+mysql> select * from test;
+--------------
+select * from test
+--------------
+
+Empty set (0.01 sec)
+
+mysql> drop table test;
+--------------
+drop table test
+--------------
+
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> show tables;
+--------------
+show tables
+--------------
+
++----------------+
+| Tables_in_pavi |
++----------------+
+| Branch1        |
+| borrow         |
+| customer       |
+| deposit        |
+| student        |
++----------------+
+5 rows in set (0.01 sec)
+
+mysql> desc student;
+--------------
+desc student
+--------------
+
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int         | NO   | PRI | NULL    |       |
+| Name    | varchar(20) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+

@@ -1,0 +1,13 @@
+ declare 
+   a integer;
+   b integer;
+   c integer;
+   vol integer;
+  begin  
+  a:=&a;
+  b:=&b;
+  c:=&c;
+  vol:=a*b*c;
+  dbms_output.put_line('volume is '|| vol);
+  end;
+

@@ -1,0 +1,44 @@
+mysql> create view money as select Firstname,Salary from Employee where Salary>100;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> select *from money;
++-----------+--------+
+| Firstname | Salary |
++-----------+--------+
+| John      |    800 |
+| Kevin     |   1600 |
+| Jean      |   2850 |
+| Lynn      |   2750 |
+| Leslil    |   2200 |
+| Cynthia   |   1250 |
++-----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> desc view;
+ERROR 1146 (42S02): Table 'pavi.view' doesn't exist
+mysql> create index heist on Employee (Employee_Id,Firstname,Job_Id);
+Query OK, 0 rows affected (0.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from heist;
+ERROR 1146 (42S02): Table 'pavi.heist' doesn't exist
+mysql> show heist;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'heist' at line 1
+mysql> show index;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show indexes from Employee;
++----------+------------+---------------+--------------+---------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table    | Non_unique | Key_name      | Seq_in_index | Column_name   | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++----------+------------+---------------+--------------+---------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Employee |          0 | PRIMARY       |            1 | Employee_Id   | A         |           4 |     NULL | NULL   |      | BTREE      |         |               |
+| Employee |          1 | Job_Id        |            1 | Job_Id        | A         |           3 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Employee |          1 | Department_Id |            1 | Department_Id | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Employee |          1 | heist         |            1 | Employee_Id   | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+| Employee |          1 | heist         |            2 | Firstname     | A         |           5 |     NULL | NULL   | YES  | BTREE      |         |               |
+| Employee |          1 | heist         |            3 | Job_Id        | A         |           5 |     NULL | NULL   | YES  | BTREE      |         |               |
++----------+------------+---------------+--------------+---------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+6 rows in set (0.03 sec)
+
+mysql> 
+
+

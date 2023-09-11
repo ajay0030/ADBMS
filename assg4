@@ -1,0 +1,1007 @@
+cec@cec-Vostro-3471:~$ sudo mysql -u
+[sudo] password for cec: 
+mysql: [ERROR] mysql: option '-u' requires an argument.
+cec@cec-Vostro-3471:~$ sudo mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.32-0ubuntu0.20.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db                 |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.42 sec)
+
+mysql> use db;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_db |
++--------------+
+| borrow       |
+| branch       |
+| customer     |
+| deposit      |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Location(Location_Id integer, Reginal_Group varchar(20));
+Query OK, 0 rows affected (1.30 sec)
+
+mysql> create table Department (Department_Id, Name, Location_Id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', Name, Location_Id)' at line 1
+mysql> create table Department (Department_Id int,Name char(20),Location_Id int);
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> create table Job(Job_Id Integer,Function Varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function Varchar(30))' at line 1
+mysql> create table Job(Job_Id Int,Function varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function varchar(30))' at line 1
+mysql> create table Job(Job_Id int,Function varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function varchar(30))' at line 1
+mysql> create table Job(Job_Id int,Function varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function varchar(30))' at line 1
+mysql> create table Job(Job_Id int , Function varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function varchar(30))' at line 1
+mysql> create table Job(Job_Id int , Function varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Function varchar(30))' at line 1
+mysql> create table Job(Job_Id int , function varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'function varchar(30))' at line 1
+mysql> create table Job(Job_Id int , function_1 varchar(30));
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> create table Employee(Employee_Id, Lastname ,Firstname, Middlename, Job_Id,
+    -> Manager_Id, Hiredate, Salary, Department_Id)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', Lastname ,Firstname, Middlename, Job_Id,
+Manager_Id, Hiredate, Salary, Departm' at line 1
+mysql> create table Employee(Employee_Id int, Lastname char(20),Firstname CHAR(20), Middlename CHAR(20), Job_Id INT, Manager_Id int, Hiredate date, Salary int,
+Department_Id int);
+Query OK, 0 rows affected (0.43 sec)
+
+mysql> create table Loan(Employee_Id int, Firstname char(20), Loan_Amount int);
+Query OK, 0 rows affected (0.43 sec)
+
+mysql> show tables;
++--------------+
+| Tables_in_db |
++--------------+
+| Department   |
+| Employee     |
+| Job          |
+| Loan         |
+| Location     |
+| borrow       |
+| branch       |
+| customer     |
+| deposit      |
++--------------+
+9 rows in set (0.00 sec)
+
+mysql> inert into Location values(122,'new york');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inert into Location values(122,'new york')' at line 1
+mysql> insert into Location values(122,'new york');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into Location values(123,'Dallas');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Location values(124,'Chicago');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Location values(167,'boston');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Location Department(10,'Accounting',122););
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Department(10,'Accounting',122)' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> insert into Location Department(10,'Accounting',122);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Department(10,'Accounting',122)' at line 1
+mysql> insert into Department values(10,'Accounting',122);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Department values(20,'Research',124);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Department values(30,'Sales',123);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Department values(40,'Operations',167);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Job values(667,'Clerk');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Job values(668,'staff');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Job values(669,'Analyst');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Job values(67,'Salesperson');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into Job values(671,'Manager');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Job values(672,'President');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Employee values(7369,'Smith','John','Q',667,7902,19841217,800,20);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Employee values(7499,'Allen','Kevin','J',67,7698,19850220,1600,30);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Employee values(7505,'Doyle','Jean','K',671,7839,19850404,2850,30);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Employee values(7506,'Dennis','Lynn','S',671,7839,19850515,2750,30);
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into Employee values(7507,'Baker','Leslil','D',671,7839,19850610,2200,40);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Employee values(7521,'Wark','Cynthia','D',670,7698,19850222,1250,30);select * from Employee;
+Query OK, 1 row affected (0.08 sec)
+
++-------------+----------+-----------+------------+--------+------------+------------+--------+---------------+
+| Employee_Id | Lastname | Firstname | Middlename | Job_Id | Manager_Id | Hiredate   | Salary | Department_Id |
++-------------+----------+-----------+------------+--------+------------+------------+--------+---------------+
+|        7369 | Smith    | John      | Q          |    667 |       7902 | 1984-12-17 |    800 |            20 |
+|        7499 | Allen    | Kevin     | J          |     67 |       7698 | 1985-02-20 |   1600 |            30 |
+|        7505 | Doyle    | Jean      | K          |    671 |       7839 | 1985-04-04 |   2850 |            30 |
+|        7506 | Dennis   | Lynn      | S          |    671 |       7839 | 1985-05-15 |   2750 |            30 |
+|        7507 | Baker    | Leslil    | D          |    671 |       7839 | 1985-06-10 |   2200 |            40 |
+|        7521 | Wark     | Cynthia   | D          |    670 |       7698 | 1985-02-22 |   1250 |            30 |
++-------------+----------+-----------+------------+--------+------------+------------+--------+---------------+
+6 rows in set (0.14 sec)
+
+mysql> desc Employee;
++---------------+----------+------+-----+---------+-------+
+| Field         | Type     | Null | Key | Default | Extra |
++---------------+----------+------+-----+---------+-------+
+| Employee_Id   | int      | YES  |     | NULL    |       |
+| Lastname      | char(20) | YES  |     | NULL    |       |
+| Firstname     | char(20) | YES  |     | NULL    |       |
+| Middlename    | char(20) | YES  |     | NULL    |       |
+| Job_Id        | int      | YES  |     | NULL    |       |
+| Manager_Id    | int      | YES  |     | NULL    |       |
+| Hiredate      | date     | YES  |     | NULL    |       |
+| Salary        | int      | YES  |     | NULL    |       |
+| Department_Id | int      | YES  |     | NULL    |       |
++---------------+----------+------+-----+---------+-------+
+9 rows in set (0.11 sec)
+
+mysql> desc Loan;
++-------------+----------+------+-----+---------+-------+
+| Field       | Type     | Null | Key | Default | Extra |
++-------------+----------+------+-----+---------+-------+
+| Employee_Id | int      | YES  |     | NULL    |       |
+| Firstname   | char(20) | YES  |     | NULL    |       |
+| Loan_Amount | int      | YES  |     | NULL    |       |
++-------------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Loan values(7369,'John',50000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Loan values(7506,'Lynn',25000);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Loan values(7521,'Cynthia',10000);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from Loan;
++-------------+-----------+-------------+
+| Employee_Id | Firstname | Loan_Amount |
++-------------+-----------+-------------+
+|        7369 | John      |       50000 |
+|        7506 | Lynn      |       25000 |
+|        7521 | Cynthia   |       10000 |
++-------------+-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> delect * from Job;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delect * from Job' at line 1
+mysql> select * from Job;
++--------+-------------+
+| Job_Id | function_1  |
++--------+-------------+
+|    667 | Clerk       |
+|    668 | staff       |
+|    669 | Analyst     |
+|     67 | Salesperson |
+|    671 | Manager     |
+|    672 | President   |
++--------+-------------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+college@cec:~$ sudo mysql -u -root
+[sudo] password for college:
+ERROR 1045 (28000): Access denied for user '-root'@'localhost' (using password: NO)
+college@cec:~$ sudo mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.41-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| yadumca            |
++--------------------+
+5 rows in set (0.08 sec)
+
+mysql> use yadumca;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_yadumca |
++-------------------+
+| Borrow            |
+| Branch            |
+| Customer          |
+| Department        |
+| Deposit           |
+| Employee          |
+| Job               |
+| Loan              |
+| Location          |
+| student           |
++-------------------+
+10 rows in set (0.00 sec)
+
+mysql> desc Location;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Location_id    | int(11)     | NO   | PRI | NULL    |       |
+| Regional_group | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.03 sec)
+
+mysql> desc Department;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Department_id | int(11)     | NO   | PRI | NULL    |       |
+| Name          | varchar(10) | YES  |     | NULL    |       |
+| Location_id   | int(11)     | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc Job;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Job_id   | int(11)     | NO   | PRI | NULL    |       |
+| Function | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc Employee;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Employee_id   | int(11)     | NO   | PRI | NULL    |       |
+| Lastname      | varchar(10) | YES  |     | NULL    |       |
+| Firstname     | varchar(10) | YES  |     | NULL    |       |
+| Middlename    | varchar(10) | YES  |     | NULL    |       |
+| Job_id        | int(11)     | YES  |     | NULL    |       |
+| Manager_id    | int(11)     | YES  |     | NULL    |       |
+| Hiredate      | varchar(10) | YES  |     | NULL    |       |
+| Salary        | int(11)     | YES  |     | NULL    |       |
+| Department_id | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> desc Loan;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Employee_id | int(11)     | NO   | PRI | NULL    |       |
+| Firstname   | varchar(10) | YES  |     | NULL    |       |
+| Loan_amount | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Location;
++-------------+----------------+
+| Location_id | Regional_group |
++-------------+----------------+
+|         122 | New york       |
+|         123 | Dallas         |
+|         124 | Chicago        |
+|         167 | Boston         |
++-------------+----------------+
+4 rows in set (0.03 sec)
+
+mysql> select * from Department;
++---------------+------------+-------------+
+| Department_id | Name       | Location_id |
++---------------+------------+-------------+
+|            10 | Accounting |         122 |
+|            20 | Research   |         124 |
+|            30 | sales      |         123 |
+|            40 | Operations |         164 |
++---------------+------------+-------------+
+4 rows in set (0.03 sec)
+
+mysql> select * from Job;
++--------+-------------+
+| Job_id | Function    |
++--------+-------------+
+|    667 | Clerk       |
+|    668 | Staff       |
+|    669 | Analyst     |
+|    670 | Salesperson |
+|    671 | Manager     |
+|    672 | President   |
++--------+-------------+
+6 rows in set (0.03 sec)
+
+mysql> select * from Employee;;
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+| Employee_id | Lastname | Firstname | Middlename | Job_id | Manager_id | Hiredate  | Salary | Department_id |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+|        7369 | Smith    | John      | Q          |    667 |       7902 | 17-DEC-84 |    800 |            20 |
+|        7499 | Allen    | Kevin     | J          |    670 |       7698 | 20-FEB-85 |   1600 |            30 |
+|        7505 | Doyle    | Jean      | K          |    671 |       7839 | 04-APR-85 |   2850 |            30 |
+|        7506 | Dennis   | Lynn      | S          |    671 |       7839 | 15-MAY-85 |   2750 |            30 |
+|        7507 | Baker    | Leslie    | D          |    671 |       7839 | 10-JUN-85 |   2200 |            40 |
+|        7521 | Wark     | Cynthia   | D          |    670 |       7698 | 22-FEB-85 |   1250 |            30 |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+6 rows in set (0.01 sec)
+
+ERROR:
+No query specified
+
+mysql> select * from Loan;
++-------------+-----------+-------------+
+| Employee_id | Firstname | Loan_amount |
++-------------+-----------+-------------+
+|        7499 | Kevin     |       15000 |
+|        7506 | Lynn      |       11000 |
+|        7639 | John      |       10000 |
++-------------+-----------+-------------+
+3 rows in set (0.03 sec)
+
+mysql> alter table Department add foreign key(Location_id) references Location(Location_id);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`yadumca`.`#sql-57c_5`, CONSTRAINT `#sql-57c_5_ibfk_1` FOREIGN KEY (`Location_id`) REFERENCES `Location` (`Location_id`))
+mysql> alter table Department add foreign key(Location_id) references Location(Location_id);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`yadumca`.`#sql-57c_5`, CONSTRAINT `#sql-57c_5_ibfk_1` FOREIGN KEY (`Location_id`) REFERENCES `Location` (`Location_id`))
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);alter table Department drop primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+Query OK, 4 rows affected (0.90 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);alter table Department drop foreign  key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);alter table Department drop foreign key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);alter table Department drop foreignkey;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+ERROR 1091 (42000): Can't DROP 'foreignkey'; check that column/key exists
+mysql> alter table Department add foreign key(Location_id) references Location(Location_id);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`yadumca`.`#sql-57c_5`, CONSTRAINT `#sql-57c_5_ibfk_1` FOREIGN KEY (`Location_id`) REFERENCES `Location` (`Location_id`))
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);alter table Location drop foreign key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table Department add foreignkey (Location_id)references Location(Location_id);alter table Location drop primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id)references Location(Location_id)' at line 1
+Query OK, 4 rows affected (0.82 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc location;                                                           ERROR 1146 (42S02): Table 'yadumca.location' doesn't exist
+mysql> desc Location;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Location_id    | int(11)     | NO   |     | NULL    |       |
+| Regional_group | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc Department;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Department_id | int(11)     | NO   |     | NULL    |       |
+| Name          | varchar(10) | YES  |     | NULL    |       |
+| Location_id   | int(11)     | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table Location add primary key (Location_id);
+Query OK, 0 rows affected (0.59 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Location;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Location_id    | int(11)     | NO   | PRI | NULL    |       |
+| Regional_group | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table Department add primary key (Department_id);
+Query OK, 0 rows affected (0.57 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Location add primary key (Location_id);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> desc Department;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Department_id | int(11)     | NO   | PRI | NULL    |       |
+| Name          | varchar(10) | YES  |     | NULL    |       |
+| Location_id   | int(11)     | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> alter table Department add foreign key (Location_id) references Location (Location_id);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`yadumca`.`#sql-57c_5`, CONSTRAINT `#sql-57c_5_ibfk_1` FOREIGN KEY (`Location_id`) REFERENCES `Location` (`Location_id`))
+mysql> alter table Department add foreignkey (Location_id) references Location (Location_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id) references Location (Location_id)' at line 1
+mysql> alter table Department add foreign key(Location_id) references Location(Location_id);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`yadumca`.`#sql-57c_5`, CONSTRAINT `#sql-57c_5_ibfk_1` FOREIGN KEY (`Location_id`) REFERENCES `Location` (`Location_id`))
+mysql> alter table Department add foreignkey(Location_id) references Location(Location_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id) references Location(Location_id)' at line 1
+mysql> alter table Department add foreignkey(Location_id) references Location(Location_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Location_id) references Location(Location_id)' at line 1
+mysql> truncate table Location;                                                 Query OK, 0 rows affected (0.27 sec)
+
+mysql> truncate table Department;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> insert into Location values(123,'Dallas');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Location values(124,'Chicago');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Location values(167,'Boston');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Department values(20,'Research',124);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Department values(30,'Sales',123);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> truncate table Location;
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> truncate table Department;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> insert into Location values(122,'New york');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Location values(123,'Dallas');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into Location values(124,'Chicago');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into Location values(167,'Boston');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into Department values(10,'Accounting',122);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into Department values(20,'Research',124);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Department values(30,'Sales',123);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Department values(40,'Operations',167);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> alter table Department add foreign key(Location_id) references Location(Location_id);
+Query OK, 4 rows affected (0.77 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc Department;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Department_id | int(11)     | NO   | PRI | NULL    |       |
+| Name          | varchar(10) | YES  |     | NULL    |       |
+| Location_id   | int(11)     | NO   | MUL | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc Location;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Location_id    | int(11)     | NO   | PRI | NULL    |       |
+| Regional_group | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc Job;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Job_id   | int(11)     | NO   | PRI | NULL    |       |
+| Function | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc Employee;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Employee_id   | int(11)     | NO   | PRI | NULL    |       |
+| Lastname      | varchar(10) | YES  |     | NULL    |       |
+| Firstname     | varchar(10) | YES  |     | NULL    |       |
+| Middlename    | varchar(10) | YES  |     | NULL    |       |
+| Job_id        | int(11)     | YES  |     | NULL    |       |
+| Manager_id    | int(11)     | YES  |     | NULL    |       |
+| Hiredate      | varchar(10) | YES  |     | NULL    |       |
+| Salary        | int(11)     | YES  |     | NULL    |       |
+| Department_id | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> desc Loan;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Employee_id | int(11)     | NO   | PRI | NULL    |       |
+| Firstname   | varchar(10) | YES  |     | NULL    |       |
+| Loan_amount | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table Loan drop primary key ;
+Query OK, 3 rows affected (0.88 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> desc Loan;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Employee_id | int(11)     | NO   |     | NULL    |       |
+| Firstname   | varchar(10) | YES  |     | NULL    |       |
+| Loan_amount | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table Loan add foreign key(Employee_id) references EMployee(Employee_id);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> alter table Employee add foreign key (Job_id) references Job(Job_id);
+Query OK, 6 rows affected (0.88 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> alter table Employee add foreign key (Department_id) references Department(Department_id);
+Query OK, 6 rows affected (0.84 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from Job;
++--------+-------------+
+| Job_id | Function    |
++--------+-------------+
+|    667 | Clerk       |
+|    668 | Staff       |
+|    669 | Analyst     |
+|    670 | Salesperson |
+|    671 | Manager     |
+|    672 | President   |
++--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+| Employee_id | Lastname | Firstname | Middlename | Job_id | Manager_id | Hiredate  | Salary | Department_id |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+|        7369 | Smith    | John      | Q          |    667 |       7902 | 17-DEC-84 |    800 |            20 |
+|        7499 | Allen    | Kevin     | J          |    670 |       7698 | 20-FEB-85 |   1600 |            30 |
+|        7505 | Doyle    | Jean      | K          |    671 |       7839 | 04-APR-85 |   2850 |            30 |
+|        7506 | Dennis   | Lynn      | S          |    671 |       7839 | 15-MAY-85 |   2750 |            30 |
+|        7507 | Baker    | Leslie    | D          |    671 |       7839 | 10-JUN-85 |   2200 |            40 |
+|        7521 | Wark     | Cynthia   | D          |    670 |       7698 | 22-FEB-85 |   1250 |            30 |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> truncate table Location;mysql>
+mysql> select columns from Employee inner join Loan on Employee.column=Loan.column;
+ERROR 1054 (42S22): Unknown column 'columns' in 'field list'
+mysql> select * from Loan;
++-------------+-----------+-------------+
+| Employee_id | Firstname | Loan_amount |
++-------------+-----------+-------------+
+|        7499 | Kevin     |       15000 |
+|        7506 | Lynn      |       11000 |
+|        7639 | John      |       10000 |
++-------------+-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname,Loan.Firstname from Employee inner join Loan on Employee.Employee_id=Loan.Employee_id;
++-----------+-----------+
+| Firstname | Firstname |
++-----------+-----------+
+| Kevin     | Kevin     |
+| Lynn      | Lynn      |
++-----------+-----------+
+2 rows in set (0.04 sec)
+
+mysql> select Employee.Firstname from Employee inner join Loan on Employee.Employee_id=Loan.Employee_id;
++-----------+
+| Firstname |
++-----------+
+| Kevin     |
+| Lynn      |
++-----------+
+2 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname from Employee left join Loan on Employee.Employee_id=Loan.Employee_id;
++-----------+
+| Firstname |
++-----------+
+| Kevin     |
+| Lynn      |
+| John      |
+| Jean      |
+| Leslie    |
+| Cynthia   |
++-----------+
+6 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname from Employee right join Loan on Employee.Employee_
++-----------+
+| Firstname |
++-----------+
+| Kevin     |
+| Lynn      |
+| NULL      |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname,Lastname from Employee right join Loan on Employee.
++-----------+----------+
+| Firstname | Lastname |
++-----------+----------+
+| Kevin     | Allen    |
+| Lynn      | Dennis   |
+| NULL      | NULL     |
++-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname,Lastname,Employee_id,Loan.Loan_amount from Employee
+ERROR 1052 (23000): Column 'Employee_id' in field list is ambiguous
+mysql> select Employee.Firstname,Lastname,Loan.Loan_amount from Employee right join Loan on Employee.Employee_id=Loan.Employee_id;
++-----------+----------+-------------+
+| Firstname | Lastname | Loan_amount |
++-----------+----------+-------------+
+| Kevin     | Allen    |       15000 |
+| Lynn      | Dennis   |       11000 |
+| NULL      | NULL     |       10000 |
++-----------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname,Lastname,Loan.Loan_amount from Employee left join Loan on Employee.Employee_id=Loan.Employee_id;
++-----------+----------+-------------+
+| Firstname | Lastname | Loan_amount |
++-----------+----------+-------------+
+| Kevin     | Allen    |       15000 |
+| Lynn      | Dennis   |       11000 |
+| John      | Smith    |        NULL |
+| Jean      | Doyle    |        NULL |
+| Leslie    | Baker    |        NULL |
+| Cynthia   | Wark     |        NULL |
++-----------+----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select Employee.Firstname,Lastname,Loan.Loan_amount from Employee inner join Loan on Employee.Employee_id=Loan.Employee_id;
++-----------+----------+-------------+
+| Firstname | Lastname | Loan_amount |
++-----------+----------+-------------+
+| Kevin     | Allen    |       15000 |
+| Lynn      | Dennis   |       11000 |
++-----------+----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select Firstname,Lastname,Manager_id from Employee union select Firstname,Loan_amount from Loan;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> select Firstname from Employee union select Firstname from Loan;
++-----------+
+| Firstname |
++-----------+
+| John      |
+| Kevin     |
+| Jean      |
+| Lynn      |
+| Leslie    |
+| Cynthia   |
++-----------+
+6 rows in set (0.03 sec)
+
+mysql> select Firstname,Employee_id from Employee union select Firstname,Employee_id from Loan;
++-----------+-------------+
+| Firstname | Employee_id |
++-----------+-------------+
+| John      |        7369 |
+| Kevin     |        7499 |
+| Jean      |        7505 |
+| Lynn      |        7506 |
+| Leslie    |        7507 |
+| Cynthia   |        7521 |
+| John      |        7639 |
++-----------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select Firstname,Employee_id from Employee union all select Firstname,Employee_id from Loan;
++-----------+-------------+
+| Firstname | Employee_id |
++-----------+-------------+
+| John      |        7369 |
+| Kevin     |        7499 |
+| Jean      |        7505 |
+| Lynn      |        7506 |
+| Leslie    |        7507 |
+| Cynthia   |        7521 |
+| Kevin     |        7499 |
+| Lynn      |        7506 |
+| John      |        7639 |
++-----------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> select Firstname from Employee where Firstname in (select Firtname from loan);
+ERROR 1146 (42S02): Table 'yadumca.loan' doesn't exist
+mysql> select Firstname from Employee where Firstname in (select Firtname from loan);
+ERROR 1146 (42S02): Table 'yadumca.loan' doesn't exist
+mysql> select Firstname from Employee where Firstname in (select Firtname from Loan);
+ERROR 1054 (42S22): Unknown column 'Firtname' in 'field list'
+mysql> select Firstname from Employee where Firstname in (select Firstname from Loan);
++-----------+
+| Firstname |
++-----------+
+| John      |
+| Kevin     |
+| Lynn      |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select count(Department_id) from Empployee where Department_id in (select Department_id from Department where Name='sales';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select count(Department_id) from Empployee where Department_id in (select Department_id from Department where Name='Sales';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from Department;
++---------------+------------+-------------+
+| Department_id | Name       | Location_id |
++---------------+------------+-------------+
+|            10 | Accounting |         122 |
+|            20 | Research   |         124 |
+|            30 | Sales      |         123 |
+|            40 | Operations |         167 |
++---------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(Job_id) from Job where Job_id in (select Job_id from Job where Name='Salesperson';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select count(Job_id) from Job where Job_id in (select Job_id from Job where Fuction_1='Salesperson';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from job;
+ERROR 1146 (42S02): Table 'yadumca.job' doesn't exist
+mysql> select * from Job;
++--------+-------------+
+| Job_id | Function    |
++--------+-------------+
+|    667 | Clerk       |
+|    668 | Staff       |
+|    669 | Analyst     |
+|    670 | Salesperson |
+|    671 | Manager     |
+|    672 | President   |
++--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(Job_id) from Job where Job_id in (select Job_id from Job where Fuction='Salesperson';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select count(Job_id) from Employee where Job_id in (select Job_id from Job where Fuction='Salesperson';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select count(Job_id) from Employee where Job_id in(select Job_id from Job where Fuction='Salesperson';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from Employee;
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+| Employee_id | Lastname | Firstname | Middlename | Job_id | Manager_id | Hiredate  | Salary | Department_id |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+|        7369 | Smith    | John      | Q          |    667 |       7902 | 17-DEC-84 |    800 |            20 |
+|        7499 | Allen    | Kevin     | J          |    670 |       7698 | 20-FEB-85 |   1600 |            30 |
+|        7505 | Doyle    | Jean      | K          |    671 |       7839 | 04-APR-85 |   2850 |            30 |
+|        7506 | Dennis   | Lynn      | S          |    671 |       7839 | 15-MAY-85 |   2750 |            30 |
+|        7507 | Baker    | Leslie    | D          |    671 |       7839 | 10-JUN-85 |   2200 |            40 |
+|        7521 | Wark     | Cynthia   | D          |    670 |       7698 | 22-FEB-85 |   1250 |            30 |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(Job_id) from Employee where Job_id in(select Job_id from Jobwhere Fuction='Salesperson');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Salesperson')' at line 1
+mysql> select count(Job_id) from Employee where Job_id in(select Job_id from Job where Fuction='Salesperson');
+ERROR 1054 (42S22): Unknown column 'Fuction' in 'where clause'
+mysql> select count(Job_id) from Employee where Job_id in(select Job_id from Job where Function='Salesperson');
++---------------+
+| count(Job_id) |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from Department;
++---------------+------------+-------------+
+| Department_id | Name       | Location_id |
++---------------+------------+-------------+
+|            10 | Accounting |         122 |
+|            20 | Research   |         124 |
+|            30 | Sales      |         123 |
+|            40 | Operations |         167 |
++---------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Department where Department_id not in(10,30);
++---------------+------------+-------------+
+| Department_id | Name       | Location_id |
++---------------+------------+-------------+
+|            20 | Research   |         124 |
+|            40 | Operations |         167 |
++---------------+------------+-------------+
+2 rows in set (0.02 sec)
+
+mysql> select Employee_id,Lastname,salary from Salary where orderby salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary desc' at line 1
+mysql> select Employee_id,Lastname from employee where orderby salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary desc' at line 1
+mysql> select Employee_id,Lastname from employee where order by salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by salary desc' at line 1
+mysql> select Employee_id,Lastname from employee where order by Salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by Salary desc' at line 1
+mysql> select Employee_id,Lastname from Employee where order by Salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by Salary desc' at line 1
+mysql> select Employee_id,Lastname from Employee  order by Salary desc;
++-------------+----------+
+| Employee_id | Lastname |
++-------------+----------+
+|        7505 | Doyle    |
+|        7506 | Dennis   |
+|        7507 | Baker    |
+|        7499 | Allen    |
+|        7521 | Wark     |
+|        7369 | Smith    |
++-------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select Employee_id,Lastname,Salary from Employee  order by Salary desc;
++-------------+----------+--------+
+| Employee_id | Lastname | Salary |
++-------------+----------+--------+
+|        7505 | Doyle    |   2850 |
+|        7506 | Dennis   |   2750 |
+|        7507 | Baker    |   2200 |
+|        7499 | Allen    |   1600 |
+|        7521 | Wark     |   1250 |
+|        7369 | Smith    |    800 |
++-------------+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select Department_id,Count(Department_id) from Employee group by Department_id;
++---------------+----------------------+
+| Department_id | Count(Department_id) |
++---------------+----------------------+
+|            20 |                    1 |
+|            30 |                    4 |
+|            40 |                    1 |
++---------------+----------------------+
+3 rows in set (0.01 sec)
+
+mysql> select Department_id,Count(Department_id) from Employee group by Department_id having Count(Department_id)=4;
++---------------+----------------------+
+| Department_id | Count(Department_id) |
++---------------+----------------------+
+|            30 |                    4 |
++---------------+----------------------+
+1 row in set (0.02 sec)
+
+mysql> select Employee_id,max(Salary) from Employee;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'yadumca.Employee.Employee_id'; this is incompatible with sql_mode=only_full_group_by
+mysql> select Employee_id from Employee where Salary=(select max(Salary)from Employee);
++-------------+
+| Employee_id |
++-------------+
+|        7505 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> mysql>
+    -> mysql>select * from Employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql>
+mysql>select * from Employee' at line 1
+mysql> mysql>  mysql>select * from Employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql>  mysql>select * from Employee' at line 1
+mysql> mysql>  mysql>select * from Employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql>  mysql>select * from Employee' at line 1
+mysql> select * from Employee;
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+| Employee_id | Lastname | Firstname | Middlename | Job_id | Manager_id | Hiredate  | Salary | Department_id |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+|        7369 | Smith    | John      | Q          |    667 |       7902 | 17-DEC-84 |    800 |            20 |
+|        7499 | Allen    | Kevin     | J          |    670 |       7698 | 20-FEB-85 |   1600 |            30 |
+|        7505 | Doyle    | Jean      | K          |    671 |       7839 | 04-APR-85 |   2850 |            30 |
+|        7506 | Dennis   | Lynn      | S          |    671 |       7839 | 15-MAY-85 |   2750 |            30 |
+|        7507 | Baker    | Leslie    | D          |    671 |       7839 | 10-JUN-85 |   2200 |            40 |
+|        7521 | Wark     | Cynthia   | D          |    670 |       7698 | 22-FEB-85 |   1250 |            30 |
++-------------+----------+-----------+------------+--------+------------+-----------+--------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select Employee_id,Firsname,Lastname from Employee where Salary=(select max(Salary)from Employee);
+ERROR 1054 (42S22): Unknown column 'Firsname' in 'field list'
+mysql> select Employee_id,Firstname,Lastname from Employee where Salary=(select max(Salary)from Employee);
++-------------+-----------+----------+
+| Employee_id | Firstname | Lastname |
++-------------+-----------+----------+
+|        7505 | Jean      | Doyle    |
++-------------+-----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select Employee_id,Firstname,Lastname,Salary from Employee where Salary=(select max(Salary)from Employee);
++-------------+-----------+----------+--------+
+| Employee_id | Firstname | Lastname | Salary |
++-------------+-----------+----------+--------+
+|        7505 | Jean      | Doyle    |   2850 |
++-------------+-----------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> update Employee set Salary=Salary+(Salary * 10/100)where  ;

@@ -1,0 +1,1121 @@
+cec@cec:~$ sudo mysql -u root
+[sudo] password for cec: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.7.41-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use pavi
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_pavi |
++----------------+
+| borrow         |
+| branch         |
+| customer       |
+| deposit        |
+| student        |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into customer values(1,'Arjun');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.06 sec)
+
+mysql> alter table customer drop column Address;
+Query OK, 0 rows affected (0.64 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into customer values(101,'Arjun');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into customer values(101,'Arjun','Kozhikode');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values(102,'Divyamol','Cherthala'),(103,'Snehamol','Alappuzha'),(104,'Manu','Thiruvanathapuram'),(105,'Kevin','Eranakulam'),(106,'Melvin','Alappuzha'),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into customer values(102,'Divyamol','Cherthala'),(103,'Snehamol','Alappuzha'),(104,'Manu','Thiruvanathapuram'),(105,'Kevin','Eranakulam'),(106,'Melvin','Alappuzha');
+ERROR 1406 (22001): Data too long for column 'City' at row 3
+mysql> insert into customer values(102,'Divyamol','Cherthala'),(103,'Snehamol','Alappuzha'),(104,'Manu','Eranakulam'),(105,'Kevin','Eranakulam'),(106,'Melvin','Alappuzha'); 
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++---------+----------+------------+
+| Cust_id | C_name   | City       |
++---------+----------+------------+
+| 101     | Arjun    | Kozhikode  |
+| 102     | Divyamol | Cherthala  |
+| 103     | Snehamol | Alappuzha  |
+| 104     | Manu     | Eranakulam |
+| 105     | Kevin    | Eranakulam |
+| 106     | Melvin   | Alappuzha  |
++---------+----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table customer modify City varchar(20);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into customer values(107,'Biju','Thiruvanathapuram'),(108,'Kumar','Aroor'),(109,'Jasmine','Mararikulam'),(110,'Nevin','Fortkochi');
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;                                                        +---------+----------+-------------------+
+| Cust_id | C_name   | City              |
++---------+----------+-------------------+
+| 101     | Arjun    | Kozhikode         |
+| 102     | Divyamol | Cherthala         |
+| 103     | Snehamol | Alappuzha         |
+| 104     | Manu     | Eranakulam        |
+| 105     | Kevin    | Eranakulam        |
+| 106     | Melvin   | Alappuzha         |
+| 107     | Biju     | Thiruvanathapuram |
+| 108     | Kumar    | Aroor             |
+| 109     | Jasmine  | Mararikulam       |
+| 110     | Nevin    | Fortkochi         |
++---------+----------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Branch_id | varchar(5)  | NO   | PRI | NULL    |       |
+| bname     | varchar(15) | YES  |     | NULL    |       |
+| City      | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into branch values(1001,'Poochackal','Cherthala'),(1002,'Vaduthala','Aroor'),(1003,'Cherthala','Cherthala'),(1004,'Alappuzha','Alappuzha');
+Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select*from branch;
++-----------+------------+-----------+
+| Branch_id | bname      | City      |
++-----------+------------+-----------+
+| 1001      | Poochackal | Cherthala |
+| 1002      | Vaduthala  | Aroor     |
+| 1003      | Cherthala  | Cherthala |
+| 1004      | Alappuzha  | Alappuzha |
++-----------+------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into branch values(1005,'Thoppumpady','Eranakulam'),(1006,'Fortkochi','Eranakulam');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> alter table branch modify City varchar(20);                                  
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table branch modify bname varchar(20);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc branch;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Branch_id | varchar(5)  | NO   | PRI | NULL    |       |
+| bname     | varchar(20) | YES  |     | NULL    |       |
+| City      | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select*from branch;                                                            +-----------+-------------+------------+
+| Branch_id | bname       | City       |
++-----------+-------------+------------+
+| 1001      | Poochackal  | Cherthala  |
+| 1002      | Vaduthala   | Aroor      |
+| 1003      | Cherthala   | Cherthala  |
+| 1004      | Alappuzha   | Alappuzha  |
+| 1005      | Thoppumpady | Eranakulam |
+| 1006      | Fortkochi   | Eranakulam |
++-----------+-------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into branch values(1007,'Attingal','Thiruvanathapuram'),(1008,'Mararikulam','Alappuzha'),(1009,'Menaka','Eranakulam'),(1010,'Thycattussery','Cherthala');
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select*from branch;                                                            +-----------+---------------+-------------------+
+| Branch_id | bname         | City              |
++-----------+---------------+-------------------+
+| 1001      | Poochackal    | Cherthala         |
+| 1002      | Vaduthala     | Aroor             |
+| 1003      | Cherthala     | Cherthala         |
+| 1004      | Alappuzha     | Alappuzha         |
+| 1005      | Thoppumpady   | Eranakulam        |
+| 1006      | Fortkochi     | Eranakulam        |
+| 1007      | Attingal      | Thiruvanathapuram |
+| 1008      | Mararikulam   | Alappuzha         |
+| 1009      | Menaka        | Eranakulam        |
+| 1010      | Thycattussery | Cherthala         |
++-----------+---------------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> select*from deposit;
+Empty set (0.03 sec)
+
+mysql> insert into deposit values(0001,101,120,);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select*from customer;
++---------+----------+-------------------+
+| Cust_id | C_name   | City              |
++---------+----------+-------------------+
+| 101     | Arjun    | Kozhikode         |
+| 102     | Divyamol | Cherthala         |
+| 103     | Snehamol | Alappuzha         |
+| 104     | Manu     | Eranakulam        |
+| 105     | Kevin    | Eranakulam        |
+| 106     | Melvin   | Alappuzha         |
+| 107     | Biju     | Thiruvanathapuram |
+| 108     | Kumar    | Aroor             |
+| 109     | Jasmine  | Mararikulam       |
+| 110     | Nevin    | Fortkochi         |
++---------+----------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   | MUL | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  | MUL | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into deposit values(0001,101,120,1009,'2001-03-21');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
++--------+---------+--------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into deposit values(0002,102,150,1005,'2001-03-25');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into deposit values(0003,105,2000,1003,'2001-03-18');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into deposit values(0004,106,2000,1001,'2001-05-18');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into deposit values(0005,107,2500,1002,'2001-05-08');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into deposit values(0005,107,2500,1002,'2001-05-08');
+ERROR 1062 (23000): Duplicate entry '5' for key 'PRIMARY'
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   | MUL | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  | MUL | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | NO   |     | NULL    |       |
+| City    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into deposit values(0005,104,2500,1002,'2001-05-08');
+ERROR 1062 (23000): Duplicate entry '5' for key 'PRIMARY'
+mysql> insert into deposit values(0007,104,2500,1002,'2001-05-08');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into deposit values(0003,103,2500,1002,'2001-05-08');
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
+mysql> insert into deposit values(0009,103,2500,1002,'2001-05-08');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   | MUL | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  | MUL | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 7      | 104     |   2500 | 1002      | 2001-05-08 |
+| 9      | 103     |   2500 | 1002      | 2001-05-08 |
++--------+---------+--------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into deposit values(0006,108,3500,1004,'2002-05-28');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 7      | 104     |   2500 | 1002      | 2001-05-08 |
+| 9      | 103     |   2500 | 1002      | 2001-05-08 |
++--------+---------+--------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> insert into deposit values(0008,109,350,1006,'2002-12-28');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 7      | 104     |   2500 | 1002      | 2001-05-08 |
+| 8      | 109     |    350 | 1006      | 2002-12-28 |
+| 9      | 103     |   2500 | 1002      | 2001-05-08 |
++--------+---------+--------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into deposit values(0010,110,500,1010,'2000-12-11');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
+| 10     | 110     |    500 | 1010      | 2000-12-11 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 7      | 104     |   2500 | 1002      | 2001-05-08 |
+| 8      | 109     |    350 | 1006      | 2002-12-28 |
+| 9      | 103     |   2500 | 1002      | 2001-05-08 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from deposit where Acc_no=7;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> delete from deposit where Acc_no=9;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
+| 10     | 110     |    500 | 1010      | 2000-12-11 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 8      | 109     |    350 | 1006      | 2002-12-28 |
++--------+---------+--------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> insert into deposit values(0007,103,1500,1007,'2000-02-11');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into deposit values(0009,104,1000,1008,'2002-02-11');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 101     |    120 | 1009      | 2001-03-21 |
+| 10     | 110     |    500 | 1010      | 2000-12-11 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 7      | 103     |   1500 | 1007      | 2000-02-11 |
+| 8      | 109     |    350 | 1006      | 2002-12-28 |
+| 9      | 104     |   1000 | 1008      | 2002-02-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> insert into borrow values(121,101,1001,100);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into borrow values(122,102,1002,1000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into borrow values(123,103,1003,1200);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into borrow values(124,104,1004,120);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into borrow values(125,105,1005,1230);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into borrow values(126,106,1006,130);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into borrow values(127,107,1007,300);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into borrow values(128,108,1008,3000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into borrow values(129,109,1009,2000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into borrow values(130,110,1010,4000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> desc borrow;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Loan_no   | varchar(5)  | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select*from borrow;
++---------+---------+-----------+--------+
+| Loan_no | Cust_id | Branch_id | Amount |
++---------+---------+-----------+--------+
+| 121     | 101     | 1001      |    100 |
+| 122     | 102     | 1002      |   1000 |
+| 123     | 103     | 1003      |   1200 |
+| 124     | 104     | 1004      |    120 |
+| 125     | 105     | 1005      |   1230 |
+| 126     | 106     | 1006      |    130 |
+| 127     | 107     | 1007      |    300 |
+| 128     | 108     | 1008      |   3000 |
+| 129     | 109     | 1009      |   2000 |
+| 130     | 110     | 1010      |   4000 |
++---------+---------+-----------+--------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Acc_no=replace(1,111);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> update deposit set Acc_no=replace(Acc_no,1,111);
+Query OK, 2 rows affected (0.04 sec)
+Rows matched: 10  Changed: 2  Warnings: 0
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |    120 | 1009      | 2001-03-21 |
+| 1110   | 110     |    500 | 1010      | 2000-12-11 |
+| 2      | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 7      | 103     |   1500 | 1007      | 2000-02-11 |
+| 8      | 109     |    350 | 1006      | 2002-12-28 |
+| 9      | 104     |   1000 | 1008      | 2002-02-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Acc_no=replace(Acc_no,1110,120);
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,2,112);
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 10  Changed: 2  Warnings: 0
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |    120 | 1009      | 2001-03-21 |
+| 11120  | 110     |    500 | 1010      | 2000-12-11 |
+| 112    | 102     |    150 | 1005      | 2001-03-25 |
+| 3      | 105     |   2000 | 1003      | 2001-03-18 |
+| 4      | 106     |   2000 | 1001      | 2001-05-18 |
+| 5      | 107     |   2500 | 1002      | 2001-05-08 |
+| 6      | 108     |   3500 | 1004      | 2002-05-28 |
+| 7      | 103     |   1500 | 1007      | 2000-02-11 |
+| 8      | 109     |    350 | 1006      | 2002-12-28 |
+| 9      | 104     |   1000 | 1008      | 2002-02-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Acc_no=replace(Acc_no,3,113);
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,4,114);
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,5,115);
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,6,116);
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,7,117);
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,8,118);
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> update deposit set Acc_no=replace(Acc_no,9,119);
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |    120 | 1009      | 2001-03-21 |
+| 11120  | 110     |    500 | 1010      | 2000-12-11 |
+| 112    | 102     |    150 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     |   1500 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from deposit where Cust_id=110;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |    120 | 1009      | 2001-03-21 |
+| 112    | 102     |    150 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     |   1500 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
++--------+---------+--------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into deposit values(120,110,4500,1010,'2000-06-11');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |    120 | 1009      | 2001-03-21 |
+| 112    | 102     |    150 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     |   1500 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
+| 120    | 110     |   4500 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select*from customer;
++---------+----------+-------------------+
+| Cust_id | C_name   | City              |
++---------+----------+-------------------+
+| 101     | Arjun    | Kozhikode         |
+| 102     | Divyamol | Cherthala         |
+| 103     | Snehamol | Alappuzha         |
+| 104     | Manu     | Eranakulam        |
+| 105     | Kevin    | Eranakulam        |
+| 106     | Melvin   | Alappuzha         |
+| 107     | Biju     | Thiruvanathapuram |
+| 108     | Kumar    | Aroor             |
+| 109     | Jasmine  | Mararikulam       |
+| 110     | Nevin    | Fortkochi         |
++---------+----------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> select Cust_id,C_name from customer;
++---------+----------+
+| Cust_id | C_name   |
++---------+----------+
+| 101     | Arjun    |
+| 102     | Divyamol |
+| 103     | Snehamol |
+| 104     | Manu     |
+| 105     | Kevin    |
+| 106     | Melvin   |
+| 107     | Biju     |
+| 108     | Kumar    |
+| 109     | Jasmine  |
+| 110     | Nevin    |
++---------+----------+
+10 rows in set (0.01 sec)
+
+mysql> update deposit set Amount=replace(Amount,120,10019);
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 10  Changed: 1  Warnings: 0
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |  10019 | 1009      | 2001-03-21 |
+| 112    | 102     |    150 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     |   1500 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
+| 120    | 110     |   4500 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Amount=replace(Amount,150,10000);
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 10  Changed: 2  Warnings: 0
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |  10019 | 1009      | 2001-03-21 |
+| 112    | 102     |  10000 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     | 100000 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
+| 120    | 110     |   4500 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select Amount>10000 from deposit where id=(select Cust_id from customer);
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> select Amount>10000 from deposit where id = (select Cust_id from customer);
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> select Amount>10000 from deposit where id in (select Cust_id from customer);
+ERROR 1054 (42S22): Unknown column 'id' in 'IN/ALL/ANY subquery'
+mysql> select Cust_id,C_name from deposit where amount>10000;
+ERROR 1054 (42S22): Unknown column 'C_name' in 'field list'
+mysql> select Amount>10000 from deposit where id = (select Cust_id from customer);
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> desc deposit;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   | MUL | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  | MUL | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select Cust_id from deposit where amount>10000;
++---------+
+| Cust_id |
++---------+
+| 101     |
+| 103     |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select open_date from deposit where Cust_id=(select Cust_id from customer whereC_name='Manu');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Manu')' at line 1
+mysql> select open_date from deposit where Cust_id=(select Cust_id from customer whereC_name='Manu');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Manu')' at line 1
+mysql> select*from customer;
++---------+----------+-------------------+
+| Cust_id | C_name   | City              |
++---------+----------+-------------------+
+| 101     | Arjun    | Kozhikode         |
+| 102     | Divyamol | Cherthala         |
+| 103     | Snehamol | Alappuzha         |
+| 104     | Manu     | Eranakulam        |
+| 105     | Kevin    | Eranakulam        |
+| 106     | Melvin   | Alappuzha         |
+| 107     | Biju     | Thiruvanathapuram |
+| 108     | Kumar    | Aroor             |
+| 109     | Jasmine  | Mararikulam       |
+| 110     | Nevin    | Fortkochi         |
++---------+----------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |  10019 | 1009      | 2001-03-21 |
+| 112    | 102     |  10000 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     | 100000 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
+| 120    | 110     |   4500 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select Open_date from deposit where Cust_id=(select Cust_id from customer whereC_name='Manu');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Manu')' at line 1
+mysql> select Open_date from deposit where Cust_id =(select Cust_id from customer whereC_name='Manu');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='Manu')' at line 1
+mysql> select Open_date from deposit where Cust_id =(select Cust_id from customer where C_name='Manu');
++------------+
+| Open_date  |
++------------+
+| 2002-02-11 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select Cust_id from deposit where Open_date>'2016-01-01';
+Empty set (0.00 sec)
+
+mysql> select Cust_id from deposit where Open_date<'2016-01-01';
++---------+
+| Cust_id |
++---------+
+| 101     |
+| 102     |
+| 105     |
+| 106     |
+| 107     |
+| 108     |
+| 103     |
+| 109     |
+| 104     |
+| 110     |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from customer where C_name like 's%';
++---------+----------+-----------+
+| Cust_id | C_name   | City      |
++---------+----------+-----------+
+| 103     | Snehamol | Alappuzha |
++---------+----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select Acc_no,Cust_id from deposit where Amount>40000 and Amount <80000;
+Empty set (0.00 sec)
+
+mysql> select Acc_no,Cust_id from deposit where Amount>400 and Amount <8000;
++--------+---------+
+| Acc_no | Cust_id |
++--------+---------+
+| 113    | 105     |
+| 114    | 106     |
+| 115    | 107     |
+| 116    | 108     |
+| 119    | 104     |
+| 120    | 110     |
++--------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select C_name from customer where Cust_id=(select Cust_id from customer where C_name like '_a%');
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql>  select C_name from customer where Cust_id in (select Cust_id from customer where C_name like '_a%');
++---------+
+| C_name  |
++---------+
+| Manu    |
+| Jasmine |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select Amount,Acc_no,Cust_id from deposit where Cust_id in (select Cust_id from customer where C_name like '_____');
++--------+--------+---------+
+| Amount | Acc_no | Cust_id |
++--------+--------+---------+
+|  10019 | 111    | 101     |
+|   2000 | 113    | 105     |
+|   3500 | 116    | 108     |
+|   4500 | 120    | 110     |
++--------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql>  select customer.C_name,deposit.Amount,deposit.Acc_no from customer,deposit where customer.Cust_id=deposit.Cust_id;
++----------+--------+--------+
+| C_name   | Amount | Acc_no |
++----------+--------+--------+
+| Arjun    |  10019 | 111    |
+| Divyamol |  10000 | 112    |
+| Snehamol | 100000 | 117    |
+| Manu     |   1000 | 119    |
+| Kevin    |   2000 | 113    |
+| Melvin   |   2000 | 114    |
+| Biju     |   2500 | 115    |
+| Kumar    |   3500 | 116    |
+| Jasmine  |    350 | 118    |
+| Nevin    |   4500 | 120    |
++----------+--------+--------+
+10 rows in set (0.00 sec)
+
+mysql>  select Loan_no,Cust_id,Amount from borrow;
++---------+---------+--------+
+| Loan_no | Cust_id | Amount |
++---------+---------+--------+
+| 121     | 101     |    100 |
+| 122     | 102     |   1000 |
+| 123     | 103     |   1200 |
+| 124     | 104     |    120 |
+| 125     | 105     |   1230 |
+| 126     | 106     |    130 |
+| 127     | 107     |    300 |
+| 128     | 108     |   3000 |
+| 129     | 109     |   2000 |
+| 130     | 110     |   4000 |
++---------+---------+--------+
+10 rows in set (0.00 sec)
+
+mysql>  select C_name,Cust_id from customer where Cust_id not in (select Cust_id from borrow);
+Empty set (0.00 sec)
+
+mysql>  select C_name,Cust_id from customer where Cust_id in (select Cust_id from borrow);
++----------+---------+
+| C_name   | Cust_id |
++----------+---------+
+| Arjun    | 101     |
+| Divyamol | 102     |
+| Snehamol | 103     |
+| Manu     | 104     |
+| Kevin    | 105     |
+| Melvin   | 106     |
+| Biju     | 107     |
+| Kumar    | 108     |
+| Jasmine  | 109     |
+| Nevin    | 110     |
++----------+---------+
+10 rows in set (0.00 sec)
+
+mysql>  select customer.C_name,deposit.Cust_id from deposit,customer;
++----------+---------+
+| C_name   | Cust_id |
++----------+---------+
+| Arjun    | 101     |
+| Arjun    | 102     |
+| Arjun    | 103     |
+| Arjun    | 104     |
+| Arjun    | 105     |
+| Arjun    | 106     |
+| Arjun    | 107     |
+| Arjun    | 108     |
+| Arjun    | 109     |
+| Arjun    | 110     |
+| Divyamol | 101     |
+| Divyamol | 102     |
+| Divyamol | 103     |
+| Divyamol | 104     |
+| Divyamol | 105     |
+| Divyamol | 106     |
+| Divyamol | 107     |
+| Divyamol | 108     |
+| Divyamol | 109     |
+| Divyamol | 110     |
+| Snehamol | 101     |
+| Snehamol | 102     |
+| Snehamol | 103     |
+| Snehamol | 104     |
+| Snehamol | 105     |
+| Snehamol | 106     |
+| Snehamol | 107     |
+| Snehamol | 108     |
+| Snehamol | 109     |
+| Snehamol | 110     |
+| Manu     | 101     |
+| Manu     | 102     |
+| Manu     | 103     |
+| Manu     | 104     |
+| Manu     | 105     |
+| Manu     | 106     |
+| Manu     | 107     |
+| Manu     | 108     |
+| Manu     | 109     |
+| Manu     | 110     |
+| Kevin    | 101     |
+| Kevin    | 102     |
+| Kevin    | 103     |
+| Kevin    | 104     |
+| Kevin    | 105     |
+| Kevin    | 106     |
+| Kevin    | 107     |
+| Kevin    | 108     |
+| Kevin    | 109     |
+| Kevin    | 110     |
+| Melvin   | 101     |
+| Melvin   | 102     |
+| Melvin   | 103     |
+| Melvin   | 104     |
+| Melvin   | 105     |
+| Melvin   | 106     |
+| Melvin   | 107     |
+| Melvin   | 108     |
+| Melvin   | 109     |
+| Melvin   | 110     |
+| Biju     | 101     |
+| Biju     | 102     |
+| Biju     | 103     |
+| Biju     | 104     |
+| Biju     | 105     |
+| Biju     | 106     |
+| Biju     | 107     |
+| Biju     | 108     |
+| Biju     | 109     |
+| Biju     | 110     |
+| Kumar    | 101     |
+| Kumar    | 102     |
+| Kumar    | 103     |
+| Kumar    | 104     |
+| Kumar    | 105     |
+| Kumar    | 106     |
+| Kumar    | 107     |
+| Kumar    | 108     |
+| Kumar    | 109     |
+| Kumar    | 110     |
+| Jasmine  | 101     |
+| Jasmine  | 102     |
+| Jasmine  | 103     |
+| Jasmine  | 104     |
+| Jasmine  | 105     |
+| Jasmine  | 106     |
+| Jasmine  | 107     |
+| Jasmine  | 108     |
+| Jasmine  | 109     |
+| Jasmine  | 110     |
+| Nevin    | 101     |
+| Nevin    | 102     |
+| Nevin    | 103     |
+| Nevin    | 104     |
+| Nevin    | 105     |
+| Nevin    | 106     |
+| Nevin    | 107     |
+| Nevin    | 108     |
+| Nevin    | 109     |
+| Nevin    | 110     |
++----------+---------+
+100 rows in set (0.00 sec)
+
+mysql> select City from branch where 
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select*from branch;
++-----------+---------------+-------------------+
+| Branch_id | bname         | City              |
++-----------+---------------+-------------------+
+| 1001      | Poochackal    | Cherthala         |
+| 1002      | Vaduthala     | Aroor             |
+| 1003      | Cherthala     | Cherthala         |
+| 1004      | Alappuzha     | Alappuzha         |
+| 1005      | Thoppumpady   | Eranakulam        |
+| 1006      | Fortkochi     | Eranakulam        |
+| 1007      | Attingal      | Thiruvanathapuram |
+| 1008      | Mararikulam   | Alappuzha         |
+| 1009      | Menaka        | Eranakulam        |
+| 1010      | Thycattussery | Cherthala         |
++-----------+---------------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> select City from branch where bnamr='Cherthala';
+ERROR 1054 (42S22): Unknown column 'bnamr' in 'where clause'
+mysql> select City from branch where bname='Cherthala';
++-----------+
+| City      |
++-----------+
+| Cherthala |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select City from branch where bname='poochackal';
++-----------+
+| City      |
++-----------+
+| Cherthala |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select City from branch where bname='Vaduthala';
++-------+
+| City  |
++-------+
+| Aroor |
++-------+
+1 row in set (0.00 sec)
+
+mysql> update deposit set 
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |  10019 | 1009      | 2001-03-21 |
+| 112    | 102     |  10000 | 1005      | 2001-03-25 |
+| 113    | 105     |   2000 | 1003      | 2001-03-18 |
+| 114    | 106     |   2000 | 1001      | 2001-05-18 |
+| 115    | 107     |   2500 | 1002      | 2001-05-08 |
+| 116    | 108     |   3500 | 1004      | 2002-05-28 |
+| 117    | 103     | 100000 | 1007      | 2000-02-11 |
+| 118    | 109     |    350 | 1006      | 2002-12-28 |
+| 119    | 104     |   1000 | 1008      | 2002-02-11 |
+| 120    | 110     |   4500 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Amount=Amount+(Amount*10/100);
+Query OK, 10 rows affected (0.08 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> select*from deposit;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |  11021 | 1009      | 2001-03-21 |
+| 112    | 102     |  11000 | 1005      | 2001-03-25 |
+| 113    | 105     |   2200 | 1003      | 2001-03-18 |
+| 114    | 106     |   2200 | 1001      | 2001-05-18 |
+| 115    | 107     |   2750 | 1002      | 2001-05-08 |
+| 116    | 108     |   3850 | 1004      | 2002-05-28 |
+| 117    | 103     | 110000 | 1007      | 2000-02-11 |
+| 118    | 109     |    385 | 1006      | 2002-12-28 |
+| 119    | 104     |   1100 | 1008      | 2002-02-11 |
+| 120    | 110     |   4950 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Amount=Amount+(Amount*10/100)where Cust_id=(select Cust_id from customer where City='Eranakulam';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> update deposit set Amount=Amount+(Amount*10/100)where Cust_id=(select Cust_id from customer where City='Ernakulam';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select*from customer;
++---------+----------+-------------------+
+| Cust_id | C_name   | City              |
++---------+----------+-------------------+
+| 101     | Arjun    | Kozhikode         |
+| 102     | Divyamol | Cherthala         |
+| 103     | Snehamol | Alappuzha         |
+| 104     | Manu     | Eranakulam        |
+| 105     | Kevin    | Eranakulam        |
+| 106     | Melvin   | Alappuzha         |
+| 107     | Biju     | Thiruvanathapuram |
+| 108     | Kumar    | Aroor             |
+| 109     | Jasmine  | Mararikulam       |
+| 110     | Nevin    | Fortkochi         |
++---------+----------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> update deposit set Amount=Amount+(Amount*10/100)where Cust_id=(select Cust_id from customer where City='Eranakulam');
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> update deposit set Amount=Amount+(Amount*10/100)where Cust_id in (select Cust_id from customer where City='Eranakulam');
+Query OK, 2 rows affected (0.04 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select*from deposit;                                                           +--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 111    | 101     |  11021 | 1009      | 2001-03-21 |
+| 112    | 102     |  11000 | 1005      | 2001-03-25 |
+| 113    | 105     |   2420 | 1003      | 2001-03-18 |
+| 114    | 106     |   2200 | 1001      | 2001-05-18 |
+| 115    | 107     |   2750 | 1002      | 2001-05-08 |
+| 116    | 108     |   3850 | 1004      | 2002-05-28 |
+| 117    | 103     | 110000 | 1007      | 2000-02-11 |
+| 118    | 109     |    385 | 1006      | 2002-12-28 |
+| 119    | 104     |   1210 | 1008      | 2002-02-11 |
+| 120    | 110     |   4950 | 1010      | 2000-06-11 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> 
+
